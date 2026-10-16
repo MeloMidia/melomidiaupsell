@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acelere sua Operação de Autopeças no Mercado Livre | Reunião Estratégica 1 a 1 com Eduardo</title>
+  <meta name="description" content="Sessão individual de alinhamento estratégico com Eduardo: validação de catálogo de autopeças, auditoria de fornecedores e blindagem de margem no Mercado Livre.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+
+  <!-- Ambient Background Glows -->
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-middle"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- Top Emergency / Order Progress Bar -->
+  <header class="top-announcement-bar">
+    <div class="container bar-flex">
+      <div class="order-status-badge">
+        <span class="pulsing-dot"></span>
+        <span class="badge-text"><span class="txt-desktop">STATUS: ETAPA FINAL DO PEDIDO (85%)</span><span class="txt-mobile">ETAPA FINAL (85%)</span></span>
+      </div>
+      <div class="countdown-chip">
+        <i class="fa-regular fa-clock"></i>
+        <span><span class="txt-desktop">VAGA RESERVADA POR: </span><span class="txt-mobile">VAGA: </span><strong id="timerDisplay">14:59</strong></span>
+      </div>
+      <div class="announcement-message">
+        <i class="fa-solid fa-triangle-exclamation text-yellow"></i>
+        <span><strong>ATENÇÃO:</strong> Não feche ou atualize. Seu acesso ao Método já foi aprovado!</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero-section">
+    <div class="container hero-container">
+      
+      <!-- Top Badges -->
+      <div class="hero-pill-group">
+        <span class="hero-tag exclusive-tag">
+          <i class="fa-solid fa-bolt"></i> <span class="txt-desktop">OPORTUNIDADE ÚNICA PÓS-CHECKOUT</span><span class="txt-mobile">OPORTUNIDADE PÓS-CHECKOUT</span>
+        </span>
+        <span class="hero-tag spots-tag">
+          <i class="fa-solid fa-user-check text-green"></i> <span class="txt-desktop">Apenas 4 Vagas na Agenda Esta Semana</span><span class="txt-mobile">4 Vagas na Agenda</span>
+        </span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="hero-title">
+        Quer que o próprio <span class="text-gradient-gold">Eduardo analise seu catálogo, fornecedores e margens</span> em uma Reunião 1 a 1 antes de você gastar R$ 1 em estoque?
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="hero-subtitle">
+        Elimine o risco de comprar peças que ficam encalhadas e descubra a precificação exata para lucrar alto com <strong>Mercado Envios Full, Flex e Ads</strong> em uma sessão individual e prática de até 1h30.
+      </p>
+
+      <!-- Interactive VSL Player Box -->
+      <div class="vsl-master-card">
+        <div class="vsl-header-bar">
+          <div class="vsl-bullets">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="vsl-label">
+            <i class="fa-solid fa-headset text-yellow"></i>
+            <span><span class="txt-desktop">RECADO PESSOAL DO EDUARDO PARA NOVOS ALUNOS</span><span class="txt-mobile">RECADO DO EDUARDO</span></span>
+          </div>
+          <div class="vsl-status">
+            <span class="live-pill">AO VIVO</span>
+          </div>
+        </div>
+
+        <div class="vsl-frame-wrapper" id="vslPlayerWrapper">
+          <!-- Real HTML5 Video Player -->
+          <video id="upsellVideo" class="vsl-video-player" playsinline preload="metadata" poster="video-poster.jpg">
+            <source src="upsell-video.mp4" type="video/mp4">
+            <source src="1007 (1).mp4" type="video/mp4">
+            Seu navegador não suporta a reprodução deste vídeo.
+          </video>
+
+          <!-- Simulated High-End Video Player Overlay (Initial / Unplayed State) -->
+          <div class="vsl-media-container" id="vslOverlay">
+            <div class="vsl-backdrop">
+              <img src="video-poster.jpg" alt="Consultoria Mercado Livre Auto Peças - Eduardo" class="vsl-poster">
+              <div class="vsl-gradient-overlay"></div>
+            </div>
+
+            <div class="vsl-interactive-layer">
+              <button class="vsl-play-master" id="playBtn" aria-label="Iniciar Vídeo">
+                <div class="play-ring"></div>
+                <div class="play-ring delay"></div>
+                <div class="play-core">
+                  <i class="fa-solid fa-play"></i>
+                </div>
+              </button>
+            </div>
+
+            <!-- Waveform audio simulation bar -->
+            <div class="vsl-bottom-controls">
+              <div class="audio-wave">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="video-duration"><i class="fa-solid fa-volume-high"></i> Clique para ouvir a explicação com áudio</span>
+            </div>
+          </div>
+
+          <!-- Video Custom Controls (Sleek High Conversion Player Bar) -->
+          <div class="vsl-custom-controls" id="vslControls">
+            <button class="vsl-ctrl-btn" id="ctrlPlayPause" aria-label="Reproduzir/Pausar">
+              <i class="fa-solid fa-play" id="ctrlPlayIcon"></i>
+            </button>
+
+            <div class="vsl-time-display">
+              <span id="currentTime">00:00</span>
+            </div>
+
+            <div class="vsl-progress-wrapper" id="ctrlProgressWrapper">
+              <div class="vsl-progress-bar" id="ctrlProgressBar">
+                <div class="vsl-progress-fill" id="ctrlProgressFill"></div>
+              </div>
+            </div>
+
+            <div class="vsl-time-display">
+              <span id="totalDuration">03:23</span>
+            </div>
+
+            <div class="vsl-volume-group">
+              <button class="vsl-ctrl-btn" id="ctrlMute" aria-label="Volume">
+                <i class="fa-solid fa-volume-high" id="ctrlVolumeIcon"></i>
+              </button>
+              <input type="range" class="vsl-volume-slider" id="ctrlVolume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+            </div>
+
+            <button class="vsl-ctrl-btn" id="ctrlFullscreen" aria-label="Tela Cheia">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+
+          <!-- Center Play/Pause Ripple Indicator -->
+          <div class="vsl-center-indicator" id="vslCenterIndicator">
+            <div class="vsl-indicator-circle">
+              <i class="fa-solid fa-play" id="centerIndicatorIcon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Call to Action -->
+      <div class="hero-action-container">
+        <a href="#oferta" class="cta-master-btn pulse-glow">
+          <div class="cta-icon-box">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <div class="cta-text-content">
+            <span class="cta-main-title">SIM! QUERO A REUNIÃO 1 A 1 COM O EDUARDO</span>
+            <span class="cta-sub-title">Adicionar Sessão Estratégica VIP ao meu pedido com condição única</span>
+          </div>
+          <div class="cta-arrow-box">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </a>
+
+        <div class="trust-mini-strip">
+          <div class="trust-item"><i class="fa-solid fa-shield-halved text-green"></i> <span>100% Seguro</span></div>
+          <div class="trust-item"><i class="fa-solid fa-video text-yellow"></i> <span><span class="txt-desktop">Google Meet Individual</span><span class="txt-mobile">Google Meet</span></span></div>
+          <div class="trust-item"><i class="fa-solid fa-rotate-left text-green"></i> <span><span class="txt-desktop">Garantia Incondicional</span><span class="txt-mobile">Garantia Total</span></span></div>
+          <div class="trust-item"><i class="fa-solid fa-calendar-day text-blue"></i> <span><span class="txt-desktop">Agendamento Imediato</span><span class="txt-mobile">Agenda Imediata</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Live Simulated Dashboard / The Real Stakes in Auto Parts -->
+  <section class="section metrics-contrast-section">
+    <div class="container">
+      
+      <div class="section-center-head">
+        <span class="kicker-pill danger-kicker">
+          <i class="fa-solid fa-triangle-exclamation"></i> O RISCO REAL DO CAMPO DE BATALHA
+        </span>
+        <h2 class="section-headline">
+          No Mercado Livre de Autopeças, <span class="text-danger-gradient">um único erro de catálogo pode queimar R$ 5.000 a R$ 20.000</span> do seu caixa.
+        </h2>
+        <p class="section-subtext">
+          Vender peças não é como vender capinha de celular. Cada modelo de carro tem compatibilidade, ano de fabricação, código OEM e taxas específicas no Full e Flex.
+        </p>
+      </div>
+
+      <!-- Contrast Cards Grid -->
+      <div class="contrast-grid">
+        
+        <!-- Trap Card 1 -->
+        <div class="risk-card">
+          <div class="risk-icon-wrapper">
+            <i class="fa-solid fa-boxes-packing"></i>
+          </div>
+          <div class="risk-content">
+            <div class="risk-tag">ARMADILHA #1</div>
+            <h3>Comprar Peças de Baixo Giro (Curva C)</h3>
+            <p>O iniciante compra o que "acha que vende" ou o que o distribuidor empurra. Resultado: amortecedores e faróis parados por 6 meses sem gerar fluxo de caixa.</p>
+            <div class="risk-stat-chip">
+              <i class="fa-solid fa-arrow-trend-down"></i> Prejuízo médio: -R$ 4.500 em capital travado
+            </div>
+          </div>
+        </div>
+
+        <!-- Trap Card 2 -->
+        <div class="risk-card">
+          <div class="risk-icon-wrapper">
+            <i class="fa-solid fa-calculator"></i>
+          </div>
+          <div class="risk-content">
+            <div class="risk-tag">ARMADILHA #2</div>
+            <h3>A Ilusão da Margem Bruta no ML</h3>
+            <p>Esquecer o peso cúbico do frete, tarifa de categoria (16% a 19%), taxa fixa abaixo de R$ 79 e imposto simples. Você bate R$ 30 mil de faturamento, mas sobra quase zero no bolso.</p>
+            <div class="risk-stat-chip">
+              <i class="fa-solid fa-arrow-trend-down"></i> Margem real corroída para menos de 4%
+            </div>
+          </div>
+        </div>
+
+        <!-- Trap Card 3 -->
+        <div class="risk-card">
+          <div class="risk-icon-wrapper">
+            <i class="fa-solid fa-truck-ramp-box"></i>
+          </div>
+          <div class="risk-content">
+            <div class="risk-tag">ARMADILHA #3</div>
+            <h3>Fornecedores Sem Preço Competitivo</h3>
+            <p>Comprar de intermediários locais que já colocam margem em cima. Você nunca consegue concorrer na primeira página nem ativar anúncios de Product Ads lucrativos.</p>
+            <div class="risk-stat-chip">
+              <i class="fa-solid fa-arrow-trend-down"></i> Perda total da Buy Box no Mercado Livre
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- The 4 Pillars of the 1-on-1 Session (Visual Blueprint Roadmap) -->
+  <section class="section blueprint-section">
+    <div class="container">
+      
+      <div class="section-center-head">
+        <span class="kicker-pill success-kicker">
+          <i class="fa-solid fa-route"></i> O MAPA DA SUA SESSÃO
+        </span>
+        <h2 class="section-headline">
+          Como serão os seus <span class="text-gradient-gold">90 minutos individuais</span> ao vivo com o Eduardo:
+        </h2>
+        <p class="section-subtext">
+          Uma reunião sem enrolação pelo Google Meet com compartilhamento de tela, abrindo o sistema, planilhas e a conta real para auditar o seu negócio.
+        </p>
+      </div>
+
+      <div class="blueprint-timeline">
+
+        <!-- Step 1 -->
+        <div class="timeline-step">
+          <div class="step-marker">
+            <span class="step-num">01</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-icon"><i class="fa-solid fa-barcode"></i></div>
+              <div>
+                <span class="step-time"><i class="fa-regular fa-clock"></i> Bloco 1 (25 min)</span>
+                <h3>Raio-X de Catálogo, SKUs e Curva de Demanda</h3>
+              </div>
+            </div>
+            <p>O Eduardo vai analisar a sua lista de produtos e definir exatamente quais linhas de autopeças (freio, suspensão, elétrica, iluminação, motor) têm o maior volume de busca com a menor concorrência predatória.</p>
+            
+            <div class="step-tags">
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Validação OEM & Compatibilidade</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Filtro de Peças Curva A</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Eliminação de SKUs Problemáticos</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="timeline-step">
+          <div class="step-marker">
+            <span class="step-num">02</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-icon"><i class="fa-solid fa-handshake-angle"></i></div>
+              <div>
+                <span class="step-time"><i class="fa-regular fa-clock"></i> Bloco 2 (20 min)</span>
+                <h3>Auditoria de Fornecedores & Poder de Barganha</h3>
+              </div>
+            </div>
+            <p>Vamos passar um pente fino nas suas cotações. O Eduardo vai avaliar se você está pagando o preço de distribuidor correto e te orientar sobre como negociar prazos, faturamento e descontos por volume.</p>
+            
+            <div class="step-tags">
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Checagem de Tabela de Distribuidor</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Roteiro de Negociação</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Estratégia de Pedido Mínimo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="timeline-step">
+          <div class="step-marker">
+            <span class="step-num">03</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-icon"><i class="fa-solid fa-chart-pie"></i></div>
+              <div>
+                <span class="step-time"><i class="fa-regular fa-clock"></i> Bloco 3 (25 min)</span>
+                <h3>Engenharia Reversa de Precificação & Margem Líquida</h3>
+              </div>
+            </div>
+            <p>Planilhamento detalhado ao vivo: cálculo exato de comissão do ML (Clássico vs Premium), custo do Mercado Envios Full, Flex e tributação. Você sairá da call sabendo quanto sobra no seu bolso em cada venda.</p>
+            
+            <div class="step-tags">
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Simulação de Full vs Flex</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Blindagem contra Prejuízo em Frete</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Meta de Lucro Líquido Real</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="timeline-step">
+          <div class="step-marker">
+            <span class="step-num">04</span>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-icon"><i class="fa-solid fa-rocket"></i></div>
+              <div>
+                <span class="step-time"><i class="fa-regular fa-clock"></i> Bloco 4 (20 min)</span>
+                <h3>Plano de Tração Rápida no Mercado Livre & Ads</h3>
+              </div>
+            </div>
+            <p>O passo a passo para criar seus primeiros anúncios perfeitos, conquistar as primeiras 10 vendas em tempo recorde, ativar a medalha do Mercado Livre e escalar com campanhas de Product Ads.</p>
+            
+            <div class="step-tags">
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Estratégia de Primeiras 10 Vendas</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Setup de Título e Ficha Técnica SEO</span>
+              <span class="sku-tag"><i class="fa-solid fa-check"></i> Roadmap de Escala para 5 e 6 Dígitos</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Comparison Matrix: Sozinho vs Com Eduardo -->
+  <section class="section comparison-section">
+    <div class="container">
+      
+      <div class="section-center-head">
+        <span class="kicker-pill warning-kicker">
+          <i class="fa-solid fa-scale-balanced"></i> DECISÃO INTELIGENTE
+        </span>
+        <h2 class="section-headline">
+          Qual caminho você escolhe para a sua operação?
+        </h2>
+      </div>
+
+      <div class="matrix-table-card">
+        <div class="matrix-grid">
+          
+          <div class="matrix-col matrix-alone">
+            <div class="col-head">
+              <div class="head-badge red-badge"><i class="fa-solid fa-xmark"></i> CAMINHO LENTO</div>
+              <h3>Tentando Descobrir Tudo Sozinho</h3>
+              <p>Testando na base da tentativa e erro</p>
+            </div>
+            <ul class="col-list">
+              <li><i class="fa-solid fa-circle-xmark text-danger"></i> <span>Comprar peças sem ter certeza se têm giro rápido no Mercado Livre.</span></li>
+              <li><i class="fa-solid fa-circle-xmark text-danger"></i> <span>Risco alto de errar nas taxas ocultas de frete e comissões do ML.</span></li>
+              <li><i class="fa-solid fa-circle-xmark text-danger"></i> <span>Negociar com fornecedores sem saber a margem real de concorrência.</span></li>
+              <li><i class="fa-solid fa-circle-xmark text-danger"></i> <span>Demorar 4 a 8 meses para atingir as primeiras metas de vendas.</span></li>
+              <li><i class="fa-solid fa-circle-xmark text-danger"></i> <span>Estresse de não saber se está operando no lucro ou no prejuízo.</span></li>
+            </ul>
+          </div>
+
+          <div class="matrix-col matrix-vip">
+            <div class="vip-floating-ribbon">RECOMENDADO</div>
+            <div class="col-head">
+              <div class="head-badge green-badge"><i class="fa-solid fa-check"></i> CAMINHO ACELERADO</div>
+              <h3>Com a Sessão 1 a 1 do Eduardo</h3>
+              <p>Auditoria individual com quem vive o campo de batalha</p>
+            </div>
+            <ul class="col-list">
+              <li><i class="fa-solid fa-circle-check text-green"></i> <span><strong>Catálogo 100% validado:</strong> você investe somente em peças com demanda comprovada.</span></li>
+              <li><i class="fa-solid fa-circle-check text-green"></i> <span><strong>Margens blindadas:</strong> cada centavo de imposto, frete e comissão calculado com precisão.</span></li>
+              <li><i class="fa-solid fa-circle-check text-green"></i> <span><strong>Fornecedores auditados:</strong> compre com preço de quem realmente tem poder de revenda.</span></li>
+              <li><i class="fa-solid fa-circle-check text-green"></i> <span><strong>Tração imediata:</strong> plano de ação direto para ativar suas vendas no primeiro mês.</span></li>
+              <li><i class="fa-solid fa-circle-check text-green"></i> <span><strong>Segurança total:</strong> tire todas as dúvidas pontuais do seu modelo de negócio.</span></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bonuses Section (Physical Card Style) -->
+  <section class="section bonus-pack-section">
+    <div class="container">
+      
+      <div class="section-center-head">
+        <span class="kicker-pill gold-kicker">
+          <i class="fa-solid fa-gift"></i> PRESENTES ESPECIAIS INCLUSOS
+        </span>
+        <h2 class="section-headline">
+          Garantindo a sua Reunião 1 a 1 hoje, <span class="text-gradient-gold">você leva estes 2 Bônus VIP sem pagar nada a mais:</span>
+        </h2>
+      </div>
+
+      <div class="bonus-cards-deck">
+        
+        <!-- Bonus 1 -->
+        <div class="luxury-bonus-card">
+          <div class="bonus-chip-top">BÔNUS EXCLUSIVO #1</div>
+          <div class="bonus-card-visual">
+            <div class="bonus-icon-big"><i class="fa-solid fa-video"></i></div>
+            <div class="bonus-badge-free">100% GRÁTIS</div>
+          </div>
+          <div class="bonus-body">
+            <h3>Gravação Completa em HD da sua Sessão</h3>
+            <p>Você não precisa se preocupar em anotar tudo correndo. Toda a conversa, compartilhamento de tela e estratégias desenhadas ficarão salvas em um link exclusivo para você reassistir sempre que for cadastrar novos produtos.</p>
+            <div class="bonus-value-anchor">
+              <span>Valor avulso de mercado:</span>
+              <del>R$ 297,00</del>
+              <strong class="free-text">GRÁTIS HOJE</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bonus 2 -->
+        <div class="luxury-bonus-card">
+          <div class="bonus-chip-top">BÔNUS EXCLUSIVO #2</div>
+          <div class="bonus-card-visual">
+            <div class="bonus-icon-big"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <div class="bonus-badge-free">100% GRÁTIS</div>
+          </div>
+          <div class="bonus-body">
+            <h3>Planilha Oficial de Precificação & Curva ABC do Mercado Livre</h3>
+            <p>A planilha proprietária pré-configurada que calcula comissões automáticas do Mercado Livre por categoria, peso de frete e margem líquida real para você cadastrar produtos sem nunca errar na conta.</p>
+            <div class="bonus-value-anchor">
+              <span>Valor avulso de mercado:</span>
+              <del>R$ 197,00</del>
+              <strong class="free-text">GRÁTIS HOJE</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Authority / Mentor Card -->
+  <section class="section mentor-spotlight-section">
+    <div class="container">
+      
+      <div class="mentor-custom-card">
+        <div class="mentor-image-wrapper">
+          <div class="mentor-photo-frame">
+            <img src="eduardo-mentor.jpg" alt="Eduardo - Especialista em Mercado Livre Auto Peças" class="mentor-img">
+            <div class="mentor-badge-float">
+              <i class="fa-solid fa-certificate text-yellow"></i>
+              <span>Mentor & Operador Real</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mentor-details">
+          <span class="kicker-pill gold-kicker">QUEM VAI GUIAR A SUA OPERAÇÃO</span>
+          <h2 class="mentor-title">Conheça o Eduardo</h2>
+          <p class="mentor-intro">
+            Diferente de "gurus" teóricos de internet, o Eduardo está todos os dias respirando o ecossistema do <strong>Mercado Livre no nicho de autopeças</strong>.
+          </p>
+          <p class="mentor-desc">
+            Ele já validou centenas de catálogos, negociou com grandes distribuidoras e construiu a metodologia do <em>Método Auto Peças no Mercado Livre</em> testando cada estratégia com capital real. Nesta sessão individual, você terá acesso irrestrito a esse know-how aplicado exclusivamente à sua realidade.
+          </p>
+
+          <div class="mentor-stats-grid">
+            <div class="m-stat">
+              <strong class="stat-number text-gradient-gold">+R$ 4.2M</strong>
+              <span class="stat-label">Movimentados no ecossistema automotivo</span>
+            </div>
+            <div class="m-stat">
+              <strong class="stat-number text-gradient-gold">100%</strong>
+              <span class="stat-label">Foco no Mercado Livre, Full e Flex</span>
+            </div>
+            <div class="m-stat">
+              <strong class="stat-number text-gradient-gold">Zero</strong>
+              <span class="stat-label">Teoria genérica, apenas prática de caixa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- The Offer Box (Bespoke Holographic VIP Pass) -->
+  <section class="section checkout-offer-section" id="oferta">
+    <div class="container small-container">
+      
+      <div class="vip-ticket-box">
+        
+        <!-- Top Urgency Banner -->
+        <div class="ticket-urgency-header">
+          <div class="ticket-header-flex">
+            <span class="urgent-pulse"><i class="fa-solid fa-bolt"></i> CONDIÇÃO ÚNICA DE BOAS-VINDAS</span>
+            <span class="one-time-tag">OPORTUNIDADE DE 1 CLIQUE</span>
+          </div>
+          <h2>Reunião Estratégica Individual com Eduardo</h2>
+          <p>Sessão 1 a 1 de até 1h30 + Gravação HD + Planilha Oficial de Precificação</p>
+        </div>
+
+        <div class="ticket-inner-body">
+          
+          <!-- Summary Checklist -->
+          <div class="ticket-checklist">
+            <h4><i class="fa-solid fa-list-check text-yellow"></i> Tudo o que está incluso no seu pacote VIP:</h4>
+            <div class="check-grid">
+              <div class="c-item">
+                <i class="fa-solid fa-circle-check text-green"></i>
+                <span><strong>1 Reunião Individual (1 a 1)</strong> de até 1h30 ao vivo via Google Meet</span>
+              </div>
+              <div class="c-item">
+                <i class="fa-solid fa-circle-check text-green"></i>
+                <span><strong>Auditoria de Catálogo e SKUs</strong> com foco em giro rápido de autopeças</span>
+              </div>
+              <div class="c-item">
+                <i class="fa-solid fa-circle-check text-green"></i>
+                <span><strong>Análise de Fornecedores</strong> e orientação de negociação direta</span>
+              </div>
+              <div class="c-item">
+                <i class="fa-solid fa-circle-check text-green"></i>
+                <span><strong>Engenharia de Precificação</strong> com taxas reais do Mercado Livre</span>
+              </div>
+              <div class="c-item">
+                <i class="fa-solid fa-circle-check text-green"></i>
+                <span><strong>BÔNUS 1:</strong> Gravação completa em HD da reunião</span>
+              </div>
+              <div class="c-item">
+                <i class="fa-solid fa-circle-check text-green"></i>
+                <span><strong>BÔNUS 2:</strong> Planilha Oficial de Precificação & Margem</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pricing Block with Anchoring -->
+          <div class="pricing-anchoring-panel">
+            <div class="anchor-row">
+              <span>Valor padrão de consultoria individual:</span>
+              <del>R$ 1.500,00</del>
+            </div>
+            
+            <div class="special-deal-banner">
+              <span class="deal-pill">DESCONTO EXCLUSIVO DE BOAS-VINDAS (80% OFF)</span>
+              
+              <div class="deal-price-wrapper">
+                <span class="installment-label">Por apenas 12x de</span>
+                <div class="main-price-figure">
+                  <span class="rs-symbol">R$</span>
+                  <span class="price-digits">29,70</span>
+                </div>
+                <span class="or-cash-text">ou apenas <strong>R$ 297,00 à vista</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Master Action CTA -->
+          <div class="ticket-action-area">
+            <a href="https://seu-link-de-checkout-aqui.com" id="upsellAcceptBtn" class="master-buy-btn pulse-glow">
+              <span class="buy-btn-icon"><i class="fa-solid fa-lock"></i></span>
+              <span class="buy-btn-text">
+                <strong>SIM, QUERO GARANTIR MINHA REUNIÃO 1 A 1 COM O EDUARDO!</strong>
+                <small>Clique aqui para adicionar a sessão VIP ao seu pedido</small>
+              </span>
+              <span class="buy-btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <!-- Rejection Link -->
+            <div class="decline-box">
+              <a href="https://seu-link-de-obrigado-ou-membros.com" id="upsellDeclineBtn" class="decline-text-link">
+                Não, obrigado. Prefiro seguir sozinho e abrir mão da análise individual e dos bônus com o Eduardo.
+              </a>
+            </div>
+          </div>
+
+          <!-- Guarantee Badge -->
+          <div class="hologram-guarantee">
+            <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="guarantee-copy">
+              <strong>Garantia Incondicional de Satisfação</strong>
+              <p>Se ao final da reunião você achar que o Eduardo não te entregou direcionamento prático suficiente para blindar sua operação, nós devolvemos 100% do valor do upsell na hora. Risco absolutamente ZERO para você.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Accordion FAQ Section -->
+  <section class="section faq-rich-section">
+    <div class="container small-container">
+      
+      <div class="section-center-head">
+        <span class="kicker-pill blue-kicker">
+          <i class="fa-solid fa-circle-question"></i> RESPOSTAS DIRETAS
+        </span>
+        <h2 class="section-headline">Perguntas Frequentes sobre a Reunião</h2>
+      </div>
+
+      <div class="modern-accordion">
+        
+        <div class="accordion-item active">
+          <button class="accordion-trigger">
+            <span class="acc-title"><i class="fa-solid fa-calendar-check text-yellow"></i> Como será feito o agendamento da minha reunião?</span>
+            <span class="acc-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-content">
+            <p>Assim que o seu pedido for aprovado, nossa equipe de suporte entrará em contato com você via WhatsApp e e-mail com o link direto da agenda do Eduardo. Você poderá escolher o dia e horário que forem mais convenientes na sua rotina (incluindo opções em horários flexíveis e noturnos).</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span class="acc-title"><i class="fa-solid fa-box text-yellow"></i> Eu ainda não comprei nenhum estoque de peças. A reunião serve para mim?</span>
+            <span class="acc-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-content">
+            <p><strong>Com certeza, é o momento perfeito!</strong> Entrar na reunião antes de comprar estoque é o cenário ideal, pois o Eduardo vai filtrar o seu catálogo para que você compre apenas peças com alto giro comprovado, evitando que você cometa o erro clássico de queimar caixa com produtos frios.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span class="acc-title"><i class="fa-solid fa-user-group text-yellow"></i> A reunião é individual ou em grupo?</span>
+            <span class="acc-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-content">
+            <p>A reunião é <strong>100% individual (1 a 1)</strong>. Estarão na sala virtual apenas você e o Eduardo, focados exclusivamente nos números, fornecedores, dúvidas e particularidades da sua loja.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span class="acc-title"><i class="fa-solid fa-video text-yellow"></i> Eu poderei reassistir a reunião depois?</span>
+            <span class="acc-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-content">
+            <p>Sim! A chamada é gravada em alta definição e disponibilizada em uma pasta privada para você baixar ou assistir quando quiser. É um material de consulta permanente para o seu negócio.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span class="acc-title"><i class="fa-solid fa-clock-rotate-left text-yellow"></i> Se eu fechar esta página, poderei comprar a consultoria depois pelo mesmo valor?</span>
+            <span class="acc-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-content">
+            <p>Não. Esta condição especial com mais de 80% de desconto é uma oferta de boas-vindas válida estritamente nesta página de pós-checkout. Fora daqui, a consultoria individual do Eduardo é comercializada pelo valor de tabela de R$ 1.500,00.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Final Reminder Banner -->
+      <div class="final-re-anchor">
+        <a href="#oferta" class="re-anchor-btn">
+          <i class="fa-solid fa-arrow-up"></i>
+          <span>APROVEITAR DESCONTO DE BOAS-VINDAS E GARANTIR MINHA VAGA</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sticky Bottom Bar for Mobile Conversion -->
+  <div class="sticky-bottom-bar" id="stickyBar">
+    <div class="sticky-flex container">
+      <div class="sticky-info">
+        <span class="sticky-title"><i class="fa-solid fa-user-tie text-yellow"></i> Reunião 1 a 1 com Eduardo</span>
+        <span class="sticky-price">12x de <strong>R$ 29,70</strong> ou R$ 297 à vista</span>
+      </div>
+      <a href="#oferta" class="sticky-btn">
+        <span>GARANTIR VAGA</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="master-footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <strong>Método Auto Peças no Mercado Livre</strong>
+        <p>Aceleração estratégica de vendas no nicho automotivo.</p>
+      </div>
+
+      <div class="footer-badges">
+        <span><i class="fa-solid fa-lock text-green"></i> Ambiente Seguro</span>
+        <span><i class="fa-solid fa-shield text-yellow"></i> Dados Protegidos</span>
+      </div>
+
+      <div class="footer-legal">
+        <p>© <span id="currentYear"></span> Método Auto Peças no Mercado Livre. Todos os direitos reservados.</p>
+        <p class="disclaimer">Aviso Legal: Os resultados podem variar de acordo com o empenho individual, capital investido e execução prática das estratégias.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
