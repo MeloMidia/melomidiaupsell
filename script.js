@@ -80,21 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Repasse Automático de Parâmetros UTM e Checkout
+  // 6. Repasse Automático de Parâmetros UTM para os Botões
   const currentSearch = window.location.search;
-  const acceptBtn = document.getElementById('upsellAcceptBtn');
-  const declineBtn = document.getElementById('upsellDeclineBtn');
+  const ctaLinks = document.querySelectorAll('.cta-master-btn, #upsellAcceptBtn, .re-anchor-btn, .sticky-btn, #upsellDeclineBtn');
 
-  if (currentSearch) {
+  if (currentSearch && ctaLinks.length > 0) {
     const cleanParams = currentSearch.startsWith('?') ? currentSearch.substring(1) : currentSearch;
     
-    [acceptBtn, declineBtn].forEach(btn => {
-      if (btn) {
-        const currentHref = btn.getAttribute('href');
-        if (currentHref && !currentHref.startsWith('#')) {
-          const glue = currentHref.includes('?') ? '&' : '?';
-          btn.setAttribute('href', `${currentHref}${glue}${cleanParams}`);
-        }
+    ctaLinks.forEach(btn => {
+      const currentHref = btn.getAttribute('href');
+      if (currentHref && !currentHref.startsWith('#')) {
+        const glue = currentHref.includes('?') ? '&' : '?';
+        btn.setAttribute('href', `${currentHref}${glue}${cleanParams}`);
       }
     });
   }
