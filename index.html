@@ -83,12 +83,28 @@
         </div>
 
         <div class="vsl-frame-wrapper" id="vslPlayerWrapper">
-          <!-- Real HTML5 Video Player -->
-          <video id="upsellVideo" class="vsl-video-player" playsinline preload="metadata" poster="video-poster.jpg">
+          <!-- Real HTML5 Video Player with full mobile & iOS compatibility -->
+          <video 
+            id="upsellVideo" 
+            class="vsl-video-player" 
+            playsinline 
+            webkit-playsinline="true" 
+            x5-playsinline="true" 
+            x5-video-player-type="h5" 
+            x-webkit-airplay="allow" 
+            preload="auto" 
+            poster="video-poster.jpg"
+            src="upsell-video-mobile.mp4">
+            <source src="upsell-video-mobile.mp4" type="video/mp4" media="(max-width: 768px)">
+            <source src="upsell-video-optimized.mp4" type="video/mp4">
             <source src="upsell-video.mp4" type="video/mp4">
-            <source src="1007 (1).mp4" type="video/mp4">
             Seu navegador não suporta a reprodução deste vídeo.
           </video>
+
+          <!-- Buffering Spinner Indicator -->
+          <div class="vsl-buffering-spinner" id="vslBuffering" aria-label="Carregando vídeo">
+            <div class="spinner-ring"></div>
+          </div>
 
           <!-- Simulated High-End Video Player Overlay (Initial / Unplayed State) -->
           <div class="vsl-media-container" id="vslOverlay">
@@ -582,15 +598,15 @@
             </div>
             
             <div class="special-deal-banner">
-              <span class="deal-pill">DESCONTO EXCLUSIVO DE BOAS-VINDAS (80% OFF)</span>
+              <span class="deal-pill">DESCONTO EXCLUSIVO DE BOAS-VINDAS (94% OFF)</span>
               
               <div class="deal-price-wrapper">
                 <span class="installment-label">Por apenas 12x de</span>
                 <div class="main-price-figure">
                   <span class="rs-symbol">R$</span>
-                  <span class="price-digits">29,70</span>
+                  <span class="price-digits">8,70</span>
                 </div>
-                <span class="or-cash-text">ou apenas <strong>R$ 297,00 à vista</strong></span>
+                <span class="or-cash-text">ou apenas <strong>R$ 87,00 à vista</strong></span>
               </div>
             </div>
           </div>
@@ -689,7 +705,7 @@
             <span class="acc-chevron"><i class="fa-solid fa-chevron-down"></i></span>
           </button>
           <div class="accordion-content">
-            <p>Não. Esta condição especial com mais de 80% de desconto é uma oferta de boas-vindas válida estritamente nesta página de pós-checkout. Fora daqui, a consultoria individual do Eduardo é comercializada pelo valor de tabela de R$ 1.500,00.</p>
+            <p>Não. Esta condição especial com mais de 90% de desconto é uma oferta de boas-vindas válida estritamente nesta página de pós-checkout. Fora daqui, a consultoria individual do Eduardo é comercializada pelo valor de tabela de R$ 1.500,00.</p>
           </div>
         </div>
 
@@ -711,7 +727,7 @@
     <div class="sticky-flex container">
       <div class="sticky-info">
         <span class="sticky-title"><i class="fa-solid fa-user-tie text-yellow"></i> Reunião 1 a 1 com Eduardo</span>
-        <span class="sticky-price">12x de <strong>R$ 29,70</strong> ou R$ 297 à vista</span>
+        <span class="sticky-price">12x de <strong>R$ 8,70</strong> ou R$ 87 à vista</span>
       </div>
       <a href="https://wa.me/556294561229?text=Ol%C3%A1!%20Quero%20garantir%20minha%20vaga%20na%20Reuni%C3%A3o%201%20a%201%20com%20o%20Eduardo." target="_blank" rel="noopener noreferrer" class="sticky-btn">
         <i class="fa-brands fa-whatsapp"></i>

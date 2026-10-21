@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 7. VSL Video Player Interativo com Controles Customizados
+  // 7. VSL Video Player Interativo com Controles Customizados e Suporte Total a Mobile/iOS
   const vslPlayerWrapper = document.getElementById('vslPlayerWrapper');
   const video = document.getElementById('upsellVideo');
   const playBtn = document.getElementById('playBtn');
@@ -116,6 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const centerIndicatorIcon = document.getElementById('centerIndicatorIcon');
 
   if (video && vslPlayerWrapper) {
+    // Configurações inline obrigatórias para iOS Safari / WebViews
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('x5-playsinline', '');
+
     const formatTime = (seconds) => {
       if (isNaN(seconds) || seconds < 0) return '00:00';
       const m = Math.floor(seconds / 60);
@@ -130,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
     video.addEventListener('loadedmetadata', setDuration);
+    video.addEventListener('loadeddata', setDuration);
     video.addEventListener('durationchange', setDuration);
     if (video.readyState >= 1) setDuration();
 
@@ -147,47 +154,100 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     };
 
+    // Auto-hide dos controles após inatividade
+    let controlsTimer = null;
+    const triggerControlsBriefly = (duration = 3000) => {
+      vslPlayerWrapper.classList.add('show-controls');
+      clearTimeout(controlsTimer);
+      controlsTimer = setTimeout(() => {
+        if (!video.paused && !isScrubbing) {
+          vslPlayerWrapper.classList.remove('show-controls');
+        }
+      }, duration);
+    };
+
+    // Banner flutuante caso autoplay mutado ocorra em mobile
+    const showUnmuteBanner = () => {
+      if (document.querySelector('.vsl-unmute-banner')) return;
+      const banner = document.createElement('div');
+      banner.className = 'vsl-unmute-banner';
+      banner.innerHTML = '<i class="fa-solid fa-volume-high text-yellow"></i> <span>Seu vídeo começou sem som. Toque aqui para ativar o áudio!</span>';
+      
+      const activateAudio = (e) => {
+        if (e) e.stopPropagation();
+        video.muted = false;
+        video.volume = 1;
+        if (ctrlVolume) ctrlVolume.value = 1;
+        updateVolumeIcon();
+        banner.remove();
+      };
+
+      banner.addEventListener('click', activateAudio);
+      banner.addEventListener('touchend', activateAudio);
+      vslPlayerWrapper.appendChild(banner);
+    };
+
+    // Motor de Execução de Play com Fallback Resiliente para Mobile
+    let isStartingPlay = false;
+    const startPlayback = () => {
+      if (isStartingPlay) return;
+      isStartingPlay = true;
+
+      // Ativa estado de carregamento imediato
+      if (video.readyState < 3) {
+        vslPlayerWrapper.classList.add('is-buffering');
+      }
+
+      // Garante atributos inline antes do play
+      video.playsInline = true;
+
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            isStartingPlay = false;
+            vslPlayerWrapper.classList.remove('is-buffering');
+            vslPlayerWrapper.classList.add('is-playing');
+            vslPlayerWrapper.classList.remove('is-paused');
+            flashCenterIndicator(true);
+            triggerControlsBriefly();
+          })
+          .catch((error) => {
+            console.warn('Play com som rejeitado pelas políticas mobile do navegador. Tentando reproduzir com áudio mutado:', error);
+            // Políticas de navegadores mobile (ex: iOS em modo economia ou política de autoplay):
+            video.muted = true;
+            video.play()
+              .then(() => {
+                isStartingPlay = false;
+                vslPlayerWrapper.classList.remove('is-buffering');
+                vslPlayerWrapper.classList.add('is-playing');
+                vslPlayerWrapper.classList.remove('is-paused');
+                flashCenterIndicator(true);
+                showUnmuteBanner();
+                triggerControlsBriefly();
+              })
+              .catch((err2) => {
+                isStartingPlay = false;
+                vslPlayerWrapper.classList.remove('is-buffering');
+                console.error('Erro final ao reproduzir vídeo no dispositivo:', err2);
+              });
+          });
+      } else {
+        isStartingPlay = false;
+      }
+    };
+
     // Alternar Play / Pause
     const togglePlay = () => {
       if (video.paused || video.ended) {
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              flashCenterIndicator(true);
-            })
-            .catch(() => {
-              // Se o navegador barrar o som, inicia mutado e avisa o usuário
-              video.muted = true;
-              video.play().then(() => {
-                showUnmuteBanner();
-              });
-            });
-        }
+        startPlayback();
       } else {
         video.pause();
         flashCenterIndicator(false);
       }
     };
 
-    // Banner flutuante caso autoplay mutado ocorra
-    const showUnmuteBanner = () => {
-      if (document.querySelector('.vsl-unmute-banner')) return;
-      const banner = document.createElement('div');
-      banner.className = 'vsl-unmute-banner';
-      banner.innerHTML = '<i class="fa-solid fa-volume-xmark text-yellow"></i> <span>Seu vídeo começou sem som. Clique aqui para ativar o áudio!</span>';
-      banner.addEventListener('click', (e) => {
-        e.stopPropagation();
-        video.muted = false;
-        video.volume = 1;
-        if (ctrlVolume) ctrlVolume.value = 1;
-        updateVolumeIcon();
-        banner.remove();
-      });
-      vslPlayerWrapper.appendChild(banner);
-    };
-
-    // Eventos de estado do Vídeo
+    // Eventos de estado e buffer do Vídeo
     video.addEventListener('play', () => {
       vslPlayerWrapper.classList.add('is-playing');
       vslPlayerWrapper.classList.remove('is-paused');
@@ -196,17 +256,44 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    video.addEventListener('playing', () => {
+      vslPlayerWrapper.classList.remove('is-buffering');
+      vslPlayerWrapper.classList.add('is-playing');
+      vslPlayerWrapper.classList.remove('is-paused');
+      if (ctrlPlayIcon) {
+        ctrlPlayIcon.className = 'fa-solid fa-pause';
+      }
+    });
+
+    video.addEventListener('waiting', () => {
+      vslPlayerWrapper.classList.add('is-buffering');
+    });
+
+    video.addEventListener('canplay', () => {
+      vslPlayerWrapper.classList.remove('is-buffering');
+    });
+
     video.addEventListener('pause', () => {
       vslPlayerWrapper.classList.add('is-paused');
+      vslPlayerWrapper.classList.remove('is-buffering');
       if (ctrlPlayIcon) {
         ctrlPlayIcon.className = 'fa-solid fa-play';
       }
     });
 
     video.addEventListener('ended', () => {
-      vslPlayerWrapper.classList.remove('is-playing', 'is-paused');
+      vslPlayerWrapper.classList.remove('is-playing', 'is-paused', 'is-buffering');
       if (ctrlPlayIcon) ctrlPlayIcon.className = 'fa-solid fa-rotate-right';
       if (ctrlProgressFill) ctrlProgressFill.style.width = '100%';
+    });
+
+    video.addEventListener('error', (e) => {
+      console.warn('Erro na fonte atual do vídeo, tentando fonte alternativa:', e);
+      vslPlayerWrapper.classList.remove('is-buffering');
+      if (!video.currentSrc || !video.currentSrc.includes('upsell-video-optimized.mp4')) {
+        video.src = 'upsell-video-optimized.mp4';
+        video.load();
+      }
     });
 
     // Atualização de Progresso contínua
@@ -218,19 +305,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Clique no Play Inicial (Overlay)
-    if (playBtn) {
-      playBtn.addEventListener('click', (e) => {
+    // Clique e Toque no Play Inicial (Overlay)
+    const handleInitialPlay = (e) => {
+      if (e) {
+        e.preventDefault();
         e.stopPropagation();
-        togglePlay();
-      });
+      }
+      togglePlay();
+    };
+
+    if (playBtn) {
+      playBtn.addEventListener('click', handleInitialPlay);
+      playBtn.addEventListener('touchend', handleInitialPlay);
     }
 
     if (vslOverlay) {
       vslOverlay.addEventListener('click', (e) => {
-        // Se clicar em qualquer lugar do overlay inicial, inicia
+        // Se clicar em qualquer ponto do card inicial
         if (e.target !== playBtn && !playBtn.contains(e.target)) {
-          togglePlay();
+          handleInitialPlay(e);
         }
       });
     }
@@ -241,19 +334,42 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
         togglePlay();
       });
+      ctrlPlayPause.addEventListener('touchend', (e) => {
+        e.stopPropagation();
+        togglePlay();
+      });
     }
 
-    // Clique no corpo do vídeo para pausar/reproduzir
+    // Clique no corpo do vídeo para pausar/reproduzir no Desktop
     video.addEventListener('click', () => {
       togglePlay();
     });
 
-    // Barra de Progresso Interativa (Scrubbing / seek)
+    // Suporte a Toque em Mobile: Primeiro toque mostra controles, segundo pausa
+    vslPlayerWrapper.addEventListener('touchstart', (e) => {
+      if (e.target.closest('.vsl-custom-controls') || e.target.closest('#vslOverlay') || e.target.closest('.vsl-unmute-banner')) {
+        return;
+      }
+      if (vslPlayerWrapper.classList.contains('is-playing')) {
+        if (!vslPlayerWrapper.classList.contains('show-controls')) {
+          triggerControlsBriefly(3500);
+        }
+      }
+    }, { passive: true });
+
+    // Barra de Progresso Interativa (Scrubbing / seek) com suporte Desktop e Touch Mobile
     let isScrubbing = false;
+    const getEventClientX = (e) => {
+      if (e.touches && e.touches.length > 0) return e.touches[0].clientX;
+      if (e.changedTouches && e.changedTouches.length > 0) return e.changedTouches[0].clientX;
+      return e.clientX;
+    };
+
     const seek = (e) => {
       if (!ctrlProgressBar || !video.duration) return;
       const rect = ctrlProgressBar.getBoundingClientRect();
-      const clickPos = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+      const clientX = getEventClientX(e);
+      const clickPos = Math.max(0, Math.min(clientX - rect.left, rect.width));
       const percentage = clickPos / rect.width;
       video.currentTime = percentage * video.duration;
       if (ctrlProgressFill) ctrlProgressFill.style.width = `${percentage * 100}%`;
@@ -269,6 +385,11 @@ document.addEventListener('DOMContentLoaded', () => {
         isScrubbing = true;
         seek(e);
       });
+
+      ctrlProgressWrapper.addEventListener('touchstart', (e) => {
+        isScrubbing = true;
+        seek(e);
+      }, { passive: true });
     }
 
     window.addEventListener('mousemove', (e) => {
@@ -277,8 +398,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    window.addEventListener('touchmove', (e) => {
+      if (isScrubbing) {
+        seek(e);
+      }
+    }, { passive: true });
+
     window.addEventListener('mouseup', () => {
-      isScrubbing = false;
+      if (isScrubbing) {
+        isScrubbing = false;
+        triggerControlsBriefly();
+      }
+    });
+
+    window.addEventListener('touchend', () => {
+      if (isScrubbing) {
+        isScrubbing = false;
+        triggerControlsBriefly();
+      }
     });
 
     // Volume e Mute
@@ -294,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (ctrlMute) {
-      ctrlMute.addEventListener('click', (e) => {
+      const handleMute = (e) => {
         e.stopPropagation();
         video.muted = !video.muted;
         if (!video.muted && video.volume === 0) {
@@ -302,7 +439,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (ctrlVolume) ctrlVolume.value = 0.8;
         }
         updateVolumeIcon();
-      });
+      };
+      ctrlMute.addEventListener('click', handleMute);
+      ctrlMute.addEventListener('touchend', handleMute);
     }
 
     if (ctrlVolume) {
@@ -314,15 +453,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Fullscreen Toggle
+    // Fullscreen Toggle (suporte a iOS webkitEnterFullscreen)
     const toggleFullscreen = () => {
       if (!document.fullscreenElement) {
-        if (vslPlayerWrapper.requestFullscreen) {
+        if (video.webkitEnterFullscreen) {
+          video.webkitEnterFullscreen(); // iOS Safari nativo
+        } else if (vslPlayerWrapper.requestFullscreen) {
           vslPlayerWrapper.requestFullscreen();
         } else if (vslPlayerWrapper.webkitRequestFullscreen) {
           vslPlayerWrapper.webkitRequestFullscreen();
-        } else if (video.webkitEnterFullscreen) {
-          video.webkitEnterFullscreen(); // iOS Safari
         }
       } else {
         if (document.exitFullscreen) {
@@ -333,6 +472,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (ctrlFullscreen) {
       ctrlFullscreen.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFullscreen();
+      });
+      ctrlFullscreen.addEventListener('touchend', (e) => {
         e.stopPropagation();
         toggleFullscreen();
       });
@@ -347,16 +490,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Auto-hide dos controles após inatividade do mouse
-    let controlsTimer = null;
+    // Atividade do mouse para mostrar controles (Desktop)
     vslPlayerWrapper.addEventListener('mousemove', () => {
-      vslPlayerWrapper.classList.add('show-controls');
-      clearTimeout(controlsTimer);
-      controlsTimer = setTimeout(() => {
-        if (!video.paused && !isScrubbing) {
-          vslPlayerWrapper.classList.remove('show-controls');
-        }
-      }, 2500);
+      triggerControlsBriefly(2500);
     });
 
     vslPlayerWrapper.addEventListener('mouseleave', () => {
